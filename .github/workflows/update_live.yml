@@ -1,38 +1,48 @@
-name: Update Live JSON for ESP32
+name: Update live.json
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
-  workflow_dispatch:
+    # Toutes les 30 minutes (heure UTC). GitHub peut retarder l'exécution de quelques minutes.
+    - cron: "*/30 * * * *"
+  workflow_dispatch:  # lancement manuel depuis l'onglet Actions
 
 permissions:
-  contents: write
+  contents: write  # nécessaire pour committer data/live.json
+
+# Évite deux exécutions simultanées qui se marcheraient dessus au moment du push
+concurrency:
+  group: update-live
+  cancel-in-progress: false
 
 jobs:
-  update-live-data:
+  update:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
-      - name: Checkout repo
+      - name: Checkout du dépôt
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Set up Python
+      - name: Installation de Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
-      - name: Install pandas and openpyxl
-        run: pip install pandas openpyxl
+      - name: Installation des dépendances
+        run: pip install pandas openpyxl tzdata
 
-      - name: Run live JSON generator
+      - name: Génération de data/live.json
         run: python update_live.py
 
-      - name: Commit and push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "auto: update live.json for ESP32"
-          file_pattern: "data/live.json"
-          commit_user_name: "github-actions[bot]"
-          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+      - name: Commit et push si le fichier a changé
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/live.json
+          if git diff --cached --quiet; then
+            echo "Aucun changement, rien à committer."
+          else
+            git commit -m "chore: mise à jour live.json"
+            git pull --rebase
+            git push
+          fi
