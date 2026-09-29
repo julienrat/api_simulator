@@ -1,22 +1,4 @@
-name: Update Live JSON for ESP32
-
-on:
-  schedule:
-    - cron: '*/5 * * * *'
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-jobs:
-  update-live-data:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Set up Python
+- name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -24,13 +6,16 @@ jobs:
       - name: Install pandas and openpyxl
         run: pip install pandas openpyxl
 
+      - name: Pull latest changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git pull origin main --rebase || true
+
       - name: Run live JSON generator
         run: python update_live.py
 
       - name: Commit and push changes
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git pull origin main --rebase
           git add data/live.json
           git diff --staged --quiet || (git commit -m "auto: update live.json for ESP32" && git push origin main)
