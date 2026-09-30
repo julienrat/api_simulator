@@ -1,13 +1,13 @@
 {
-  "timestamp_local_2026": "2026-09-29 23:11:51",
-  "replay_timestamp_2023": "2023-09-29 23:00:00",
-  "Rain_mm": 0.085,
-  "SlrFD_avg": 122.4438,
-  "AirTC_1_avg": 20.3229,
-  "Tair_avg": 20.4346,
-  "VWC_50cm": 0.065,
-  "SF_diff_arbre09": 0.3059,
-  "LVDT_diff_arbre09": 3222.0,
-  "cumulative_rai": 429.768,
+  "timestamp_local_2026": "2026-09-30 02:37:58",
+  "replay_timestamp_2023": "2023-09-30 02:30:00",
+  "Rain_mm": 0.068,
+  "SlrFD_avg": 162.0661,
+  "AirTC_1_avg": 21.7729,
+  "Tair_avg": 22.1925,
+  "VWC_50cm": 0.067,
+  "SF_diff_arbre09": 0.3075,
+  "LVDT_diff_arbre09": 3215.0,
+  "cumulative_rai": 429.836,
   "year": 2023
 }
