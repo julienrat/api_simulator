@@ -1,13 +1,13 @@
 {
-  "timestamp_local_2026": "2026-10-12 03:28:30",
-  "replay_timestamp_2023": "2023-10-12 03:30:00",
+  "timestamp_local_2026": "2026-10-12 09:47:29",
+  "replay_timestamp_2023": "2023-10-12 09:47:29",
   "Rain_mm": 0.017,
   "SlrFD_avg": 135.3035,
   "AirTC_1_avg": 21.1152,
   "Tair_avg": 21.0627,
-  "VWC_50cm": 0.062,
-  "SF_diff_arbre09": 0.3093,
-  "LVDT_diff_arbre09": 3351.0,
+  "VWC_50cm": 0.0618,
+  "SF_diff_arbre09": 0.026,
+  "LVDT_diff_arbre09": 60.0,
   "cumulative_rai": 430.261,
   "year": 2023
 }
